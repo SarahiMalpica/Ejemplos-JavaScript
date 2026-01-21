@@ -42,3 +42,6 @@ const obtenerUsuarios = async (cantidad = 5) => {
 
     }
 }
+
+const boton = document.getElementById("btnCargar");
+boton.addEventListener("click", () => obtenerUsuarios(3)); 
