@@ -15,6 +15,24 @@ class Usuario{
         `;
     }           
 }
+
+class usuarioConRol extends Usuario {   
+    constructor(nombre, email, foto, rol){      
+        super(nombre, email, foto);
+        this.rol = rol; 
+    }
+    mostrar(){
+        return `
+            <div class="card">
+                <img src="${this.foto}" alt="${this.nombre}">
+                <h3>${this.nombre} - <span class="rol">${this.rol}</span></h3>
+                <h4>${this.rol}</h4>
+                <p>${this.email}</p>
+            </div>
+        `;
+    }   
+}
+
 // funcion flecha para renderizar usuarios
 const renderUsuarios = (usuarios) => {
     const contenedor = document.getElementById("usuarios");
@@ -26,10 +44,21 @@ const obtenerUsuarios = async (cantidad =5) => {
     try {
         const respuesta = await fetch(`https://randomuser.me/api/?results=${cantidad}`);
         const datos = await respuesta.json();
+        const roles = ["Admin", "Editor", "Viewer"]
+
         let listaUsuarios = [];
 
+
+
         datos.results.forEach(u => {
+            if (i % 2 === 0) {
             listaUsuarios.push(new Usuario(u.name.first, u.email, u.picture.medium));
+            }
+            else {
+                listaUsuarios.push(new usuarioConRol)
+                    u.name.first + '' + u.name + last,u.email,u.picture.medium,
+                    roles[i % roles.length]
+            }
         });
 
         renderUsuarios(listaUsuarios);
